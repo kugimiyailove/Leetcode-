@@ -1,0 +1,20 @@
+101 对称二叉树
+
+class Solution {
+public:
+    bool isSymmetric(TreeNode* root) {
+        if(root->right->val == root->left->val){
+            return judgeSymmetric(root->right,root->left);
+        }
+        return false;
+    }
+    bool judgeSymmetric(TreeNode* Treeright,TreeNode* Treeleft){
+        if(Treeright == NULL && Treeleft != NULL) return false;
+        if(Treeright != NULL && Treeleft == NULL) return false;
+        if(Treeright == NULL && Treeleft == NULL) return true;
+        if(Treeright-> val == Treeleft-> val){
+            return judgeSymmetric(Treeright-> right, Treeleft->left)&& judgeSymmetric(Treeright->left,Treeleft->right);
+        }
+        return false;
+    }
+};
