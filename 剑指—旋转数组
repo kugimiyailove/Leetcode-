@@ -1,0 +1,51 @@
+把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。 输入一个非减排序的数组的一个旋转，输出旋转数组的最小元素。 
+例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。 NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。
+
+自己的超复杂解法，顺便写了个测试
+#include<iostream>
+#include<algorithm>
+#include<vector>
+using namespace std;
+
+
+int easyFind(int start ,int end , vector<int>rotateArray){
+        int min = rotateArray[start];
+        for(int i=start;i<=end;i++){
+            if(rotateArray[i]<min) min=rotateArray[i];
+        }
+        return min;
+    }
+
+int find(int start,int end, vector<int>rotateArray){
+        if(end == start) return rotateArray[start];
+        if(end - start == 1) return rotateArray[end] > rotateArray[start]? rotateArray[start]:rotateArray[end];
+        int mid = start + ((end - start) >> 1);
+        if(rotateArray[start] == rotateArray[mid] && rotateArray[mid] == rotateArray[end]){
+            return easyFind(start,end,rotateArray);
+        }
+        if(rotateArray[end] >= rotateArray[start]) return rotateArray[start];
+        if(rotateArray[mid] > rotateArray[end]) return find(mid,end,rotateArray);
+        if(rotateArray[mid] < rotateArray[start]) return find(start,mid,rotateArray);
+    }
+
+int minNumberInRotateArray(vector<int> rotateArray) {
+        if(rotateArray.size()==0) return 0;
+        return find(0,rotateArray.size()-1,rotateArray);
+    }
+    
+int main(){
+	vector<int>test(5);
+	test[0] = 2;
+	test[1] = 3;
+	test[2] = 4;
+	test[3] = 5;
+	test[4] = 1;
+	int res = minNumberInRotateArray(test);
+	cout << res << endl;
+	system("pause");
+	return 0;
+}
+
+
+简单解法（不考虑直接sort）
+思路 旋转之后是两个排序数组，第二个排序数组的第一位便是最小值，通过二分查找找到最小值
