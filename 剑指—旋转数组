@@ -15,7 +15,6 @@ int easyFind(int start ,int end , vector<int>rotateArray){
         }
         return min;
     }
-
 int find(int start,int end, vector<int>rotateArray){
         if(end == start) return rotateArray[start];
         if(end - start == 1) return rotateArray[end] > rotateArray[start]? rotateArray[start]:rotateArray[end];
@@ -23,9 +22,10 @@ int find(int start,int end, vector<int>rotateArray){
         if(rotateArray[start] == rotateArray[mid] && rotateArray[mid] == rotateArray[end]){
             return easyFind(start,end,rotateArray);
         }
-        if(rotateArray[end] >= rotateArray[start]) return rotateArray[start];
-        if(rotateArray[mid] > rotateArray[end]) return find(mid,end,rotateArray);
-        if(rotateArray[mid] < rotateArray[start]) return find(start,mid,rotateArray);
+        if(rotateArray[end] > rotateArray[start]) return rotateArray[start];
+        if(rotateArray[mid] >= rotateArray[end]) return find(mid,end,rotateArray);
+        if(rotateArray[mid] <= rotateArray[start]) return find(start,mid,rotateArray);
+	return 0;
     }
 
 int minNumberInRotateArray(vector<int> rotateArray) {
@@ -49,3 +49,40 @@ int main(){
 
 简单解法（不考虑直接sort）
 思路 旋转之后是两个排序数组，第二个排序数组的第一位便是最小值，通过二分查找找到最小值
+class Solution {
+public:
+    int minNumberInRotateArray(vector<int> rotateArray) {
+        if(rotateArray.size()==0) return 0;
+        int start = 0;
+        int end = rotateArray.size()-1;
+        int mid = start;
+        while(rotateArray[start]>=rotateArray[end]){
+            if(end-start== 1){
+                mid = end;
+                break;
+            }
+            mid = start + ((end - start)>>1);
+            if(rotateArray[mid] == rotateArray[end] && rotateArray[start] == rotateArray[end]){
+                return easyfind(start, end,rotateArray);
+            }
+            if(rotateArray[mid]>=rotateArray[start]) start = mid;
+            else if(rotateArray[mid]<=rotateArray[end]) end = mid;
+        }
+        return rotateArray[mid];
+    }
+    int easyfind(int start , int end ,vector<int>rotateArray){
+        int res = rotateArray[start];
+        for(int i = start+1;i<=end;i++){
+            if(res > rotateArray[i]) res = rotateArray[i];
+        }
+        return res;
+    }
+};
+
+
+更简单做法（还是不算sort）
+思路一： 不做后面的easyfind（测试用例没考虑到特殊情况）
+思路二： 顺序找到第一个最小值
+
+
+最最简单做法 sort
