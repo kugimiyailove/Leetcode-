@@ -16,3 +16,17 @@ public:
         return end;
     }
 };
+
+
+#一只青蛙一次可以跳上1级台阶，也可以跳上2级……它也可以跳上n级。求该青蛙跳上一个n级的台阶总共有多少种跳法。
+#很简单~~前面所有情况之和=前面一个情况+前面一个情况= 2*前面一个情况，完毕
+class Solution {
+public:
+    int jumpFloorII(int number) {
+        int sum = 1;
+        for(int i =2; i<=number; i++){
+            sum = sum*2;
+        }
+        return sum;
+    }
+};
