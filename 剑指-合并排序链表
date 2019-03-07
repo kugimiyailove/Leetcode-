@@ -1,0 +1,62 @@
+#输入两个单调递增的链表，输出两个链表合成后的链表，当然我们需要合成后的链表满足单调不减规则。
+非递归：
+class Solution {
+public:
+    ListNode* Merge(ListNode* pHead1, ListNode* pHead2)
+    {
+        ListNode* lpro = NULL;
+        ListNode* res = lpro;
+        if(pHead1 == NULL) return pHead2;
+        if(pHead2 == NULL) return pHead1;
+        while(pHead1 != NULL && pHead2 != NULL){
+            if(pHead1->val <= pHead2->val){
+                if(res == NULL){
+                    res = lpro = pHead1;
+                }
+                else{
+                lpro->next = pHead1;
+                lpro = lpro->next;
+                    }
+                pHead1 = pHead1 ->next;
+            }
+            else{
+                 if(res == NULL){
+                     res = lpro = pHead2;
+                    
+                }
+                else{
+                    lpro->next = pHead2;
+                    lpro = lpro->next;
+                }
+                pHead2 = pHead2->next;
+            }
+        }
+        if(pHead1 != NULL) lpro->next = pHead1;
+        if(pHead2 != NULL) lpro->next = pHead2;
+        return res;
+    }
+};
+
+
+
+递归：
+class Solution {
+public:
+    ListNode* Merge(ListNode* pHead1, ListNode* pHead2)
+    {
+        ListNode* pNext = NULL;
+        if(pHead1 == NULL) return pHead2;
+        if(pHead2 == NULL) return pHead1;
+        if(pHead1 != NULL && pHead2 != NULL){
+            if(pHead1 -> val <= pHead2 -> val) {
+               pNext = pHead1;
+               pNext -> next = Merge(pHead1 -> next,pHead2);
+            }
+            else{
+                pNext = pHead2;
+                pNext -> next = Merge(pHead1,pHead2 -> next);
+            }
+        }
+        return pNext;
+    }
+};
