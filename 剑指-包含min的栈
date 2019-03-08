@@ -1,0 +1,27 @@
+# 定义栈的数据结构，请在该类型中实现一个能够得到栈中所含最小元素的min函数（时间复杂度应为O（1））
+
+
+class Solution {
+public:
+    void push(int value) {
+        test.push(value);
+        if(Min.empty()) Min.push(value);
+        else if(value<Min.top())Min.push(value);
+        else Min.push(Min.top());
+    }
+    void pop() {
+        if(!test.empty()){
+            test.pop();
+            Min.pop();
+        }
+    }
+    int top() {
+        return test.top();
+    }
+    int min() {
+        return Min.top();
+    }
+private:
+    stack<int> test;
+    stack<int> Min;
+};
