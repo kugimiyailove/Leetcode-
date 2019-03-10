@@ -1,0 +1,19 @@
+#从上往下打印出二叉树的每个节点，同层节点从左至右打印。
+
+class Solution {
+public:
+    vector<int> PrintFromTopToBottom(TreeNode* root) {
+        queue<TreeNode*>test;
+        vector<int> res;
+        if(root == NULL) return res;
+        test.push(root);
+        while(test.size()){
+            root = test.front();
+            res.push_back(root->val);
+            if(root->left) test.push(root->left);
+            if(root->right)test.push(root->right);
+            test.pop();
+        }
+        return res;
+    }
+};
