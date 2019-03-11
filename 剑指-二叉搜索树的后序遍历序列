@@ -1,0 +1,28 @@
+#输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。如果是则输出Yes,否则输出No。假设输入的数组的任意两个数字都互不相同。
+
+class Solution {
+public:
+    bool VerifySquenceOfBST(vector<int> sequence) {
+        return testBST(sequence,0,sequence.size()-1);
+    }
+    bool testBST(vector<int> sequence,int start,int end){
+        if(start>end) return false;
+        if(start==end) return true;
+        int judge = 0;
+        int i = start;
+        bool res = true;
+        while(sequence[i]<sequence[end]){
+            i++;
+        }
+        judge = i;
+        while(i < end){
+            if(sequence[i]<sequence[end]) return false;
+            i++;
+        }
+        if(i != start)     res = testBST(sequence,start,judge-1);
+        if(judge != end)   res = testBST(sequence,judge,end-1);
+        return res;
+    }
+};
+
+然而我不能来理解，为什么不加第一条就会溢出。。。。
