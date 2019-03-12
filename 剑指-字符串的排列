@@ -1,0 +1,26 @@
+#输入一个字符串,按字典序打印出该字符串中字符的所有排列。
+例如输入字符串abc,则打印出由字符a,b,c所能排列出来的所有字符串abc,acb,bac,bca,cab和cba。
+
+
+
+class Solution {
+public:
+    vector<string> Permutation(string str) {
+        vector<string> res;
+        int mark = 0;
+        all(res,str,mark);
+        sort(res.begin(),res.end());
+        return res;
+    }
+    void all(vector<string>&res,string str, int mark){
+        if(mark == str.size()-1) res.push_back(str);
+        else{
+            for(int i=mark;i<str.size();i++){
+                if(i!=mark&&str[i]==str[mark]) continue;
+                swap(str[mark],str[i]);
+                all(res,str,mark+1);
+                swap(str[mark],str[i]);
+            }
+        }
+    }
+};
